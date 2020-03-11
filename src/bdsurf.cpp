@@ -234,7 +234,6 @@ void BdSurf::setup_interpolation_samples(int V, double spacing){
             // if the sample is in the patch interior, compute and save its
             // position on surface
             bool is_sample_in_interior =  cd.x()<.95*EVAL_UB() && cd.y()<.95*EVAL_UB();
-            // TODO use memcpy instead
             if(is_sample_in_interior) { 
                 vector<Point3> position_and_derivs(3,Point3());
                 eval(EVAL_VALUE|EVAL_1ST_DERIV, V, xy.array(), position_and_derivs.data(), true);
@@ -335,7 +334,6 @@ void BdSurf::DenseSampleData::get_interpolation_data(int data_index, Point2 xy,
     Index2 index_xy = to_index(xy);
     //assert(index_xy.x() >= 1 && index_xy.x() <= _num_samples-2);
     //assert(index_xy.y() >= 1 && index_xy.y() <= _num_samples-2);
-    // TODO FIGURE OUT WHY THIS FAILS
     assert(can_interpolate(xy));
     int i = index_xy.x();
     int j = index_xy.y();

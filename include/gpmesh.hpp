@@ -130,7 +130,7 @@ protected:
     vector< int > _corner;
     vector<Point3> _interior_points;
     vector<int> _intpt_orientation;
-    vector<int> _gids; //TODO: remove this
+    vector<int> _gids; 
     vector<int> _face_group_ids;
 };
 

@@ -217,42 +217,12 @@ void bary2d_subarray(
         NumVector& barycentric_weights_y,
         Point2& eval_point,
         Point3& interpolant_value){
-        //NumMatrix& refined_xy_coordinates,
-        //NumMatrix& refined_function_values){
-    //assert(refined_xy_coordinates.n() == refined_function_values.n());
     assert(xy_coordinates.n() == function_values.n());
-    //setvalue(refined_function_values, 0.);
     interpolant_value *= 0.;
     const int num_samples_1d = 4;
 
-    /*
-     * Let s_ij = (x_i, y_j) be the sample points in xy_coordinates and
-     * refined_xy_coordinates. We assume the sample points are on a 
-     * tensor-product grid, i.e. x_i = y_i and (s_ik)_1 = (s_ij)_1 for any j,k
-     *
-     */
 
-    /*
-    NumVector interpolation_nodes_x(num_samples_1d);
-    NumVector interpolation_nodes_y(num_samples_1d);
-    for(int i =0; i < num_samples_1d; i++){
-        interpolation_nodes_x(i) = xy_coordinates(0,idx.x()+i);
-        interpolation_nodes_y(i) = xy_coordinates(1,(idx.y()+i)*num_samples_1d); 
-    }*/
-
-
-    // TODO implement 2d barycentric interpolation
-
-    // O(n^2) precomputation of weights; we assume that the x and y
-    // interpolation nodes are the same.
-    /*
-    NumVector barycentric_weights_x = 
-        bary_weights_1d(interpolation_nodes_x);
-    NumVector barycentric_weights_y = 
-        bary_weights_1d(interpolation_nodes_y);
-    */
-
-    // iterate  over coefficients of function values.... TODO bring inside loop
+    // iterate  over coefficients of function values.... 
     // iteration over desired samples of interpolant
     //for(int si =0; si < refined_xy_coordinates.n(); si++){
     int ix = idx[0];
@@ -260,10 +230,7 @@ void bary2d_subarray(
             cout << barycentric_weights_x << endl;
             cout << barycentric_weights_y<< endl;
         for(int d =0; d < dof; d++){
-            //Point2 eval_point(refined_xy_coordinates.clmdata(si));
 
-            //NumVector distance_to_nodes_x(num_samples_1d);
-            //NumVector distance_to_nodes_y(num_samples_1d);
             double distance_to_nodes_x[num_samples_1d];
             double distance_to_nodes_y[num_samples_1d];
             for(int i =0; i < num_samples_1d; i++){
