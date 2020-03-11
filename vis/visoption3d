@@ -1,0 +1,65 @@
+%------------------------------------------------------------------------------------
+-objtype			1	%0--ccsurf, 1--bdsurf
+%------------------------------------------------------------------------------------
+%BASIC CONTROLS(CATMULL-CLARK)
+
+-ccsurf_submatlibfile		ccsubmatall.dat %ccsubmat_int_boun_v8.dat
+-ccsurf_renderlvl		5
+-ccsurf_flats			-1		%flatness parameter, -1 is the default val
+						%given in paper (Biermann, Zorin)
+%------------------------------------------------------------------------------------
+%BASIC CONTROLS(BLEND SURFACE)
+
+-bdsurf_submatlibfile	ccsubmatall.dat % ccsubmat_intboun13_corner8.dat % ccsubmat_int_v13.dat %	
+-bdsurf_bdulibfile		bdsurf_U_ONE.dat
+-bdsurf_meshfile /Users/mmorse/Code/mercurial/mobo-temp/src/ebi/harper/wrl_files/squished_cube.wrl	
+-bdsurf_renderlvl	    1
+-bdsurf_rendergen		0		% 0 = render full mesh, 
+						% 1 = render 1/2 charts,
+						% 2 = render extraordinary full charts
+-bdsurf_ctrllvl			2		% nr of subdivision steps 
+
+% new options for face map
+-bdsurf_refinement_factor  2
+-bdsurf_patch_order 5
+-bdsurf_adaptive 0
+
+
+
+-bdsurf_chttyp			2               % 0 = fully complex
+						% 1 = characteristic map
+						% 2 = isodistance
+-bdsurf_bsstyp			0		% 0 =poly
+						% 1 =spline
+-bdsurf_stpppg			0		% preprocessing, 0 = turned off
+-bdsurf_lb			0 %0.03125	       %lower and upper bounds for pou
+-bdsurf_ub			1 %0.96875 
+-bdsurf_alt			0		% 1 = high order derivative evaluation mode(slow)
+-bdsurf_loadw			1
+-bdsurf_matdir			dat/rescaled_1e-8_bnd10_cv10_cc_1000/
+-bdsurf_activevert		0
+
+%------------------------------------------------------------------------------------
+%POU
+-bdsurf_pouctrl			1		% 0 = analytic pou, 1=spline basis func as pou , 2=optimal pou
+-bdsurf_poubsdeg		6	        % degree of spline basis func used for pou
+%------------------------------------------------------------------------------------
+%BOUNDARIES/CORNERS
+-bdsurf_indepboun		1		%  0 = global case (boun), 1 =indep boun
+-bdsurf_flats			-1		% -1=default (or replace with any val 0<=f<=1)
+%------------------------------------------------------------------------------------
+%POLY-RELATED
+-bdsurf_concat			12		% for val>=12, deg = this value+2f
+%------------------------------------------------------------------------------------
+%SPLINE-RELATED
+-bdsurf_spdeg			6  	% degree of spline used
+-bdsurf_g			3       % g = num patches+1
+%------------------------------------------------------------------------------------
+%VIEWER RELATED
+-bdsurfobj_texfile		texfiles/circle.ppm
+-vrname				NYU
+#-camfile                 camera.cam
+-surfrendertype		1
+-rendertype		1
+-options_table
+%------------------------------------------------------------------------------------

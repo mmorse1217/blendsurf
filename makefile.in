@@ -1,0 +1,83 @@
+#------------------------------------------------------
+# machine dependent parameters
+
+#------------------------------------------------------
+# default compilation mode
+#------------------------------------------------------
+MODE = release
+
+#------------------------------------------------------
+# shell specification
+#------------------------------------------------------
+SHELL = /bin/bash
+
+#------------------------------------------------------
+# included directories
+#------------------------------------------------------
+
+#------------------------------------------------------
+# necessary libraries for link
+#------------------------------------------------------
+OS := $(shell uname)
+FFTW_INC = ${FFTW_DIR}/include
+FFTW_LIB = ${FFTW_DIR}/lib
+ifeq ($(OS), Darwin)
+ INCLUDES = -I"/System/Library/Frameworks/GLUT.framework"
+ INCLUDES = -I/usr/X11R6/include  \
+			-I"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/Accelerate.framework/Versions/Current/Headers"
+ endif
+
+ifeq ($(OS), Darwin)
+LIBS = 	-lstdc++ -L"/System/Library/Frameworks/GLUT.framework" -framework GLUT -framework Cocoa\
+	-L"/System/Library/Frameworks/OpenGL.framework/Libraries" -framework OpenGL\
+	-L"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/Accelerate.framework/Versions/Current/"\
+ 	-framework Accelerate\
+	-L/usr/X11R6/lib -L/sw/lib/ -lpng -lXi -lXt -lXmu -L. -lblend -lgomp
+ endif
+
+ifeq ($(OS), Linux)
+# needed for mercer
+LIBS =  -L${LAPACK_LIB} -L/usr/bin -lglut -lGLU -lGL -lblas -llapack -lpng  -L${BLENDSURF_DIR} -lblend
+
+# needed for prince
+INCLUDES = -I${GLUT_DIR}/include -I/usr/include 
+LIBS =  -L${LAPACK_LIB} -L/usr/lib64 -L${GLUT_DIR}/lib -lglut -lGLU -lGL -lblas -llapack -lpng  -L${BLENDSURF_DIR} -lblend
+endif
+#LIBS = -lglut32 -lglu32 -lopengl32  -lblas -llapack -lpng -libebi 
+LIBS+= -L${FFTW_LIB} -lfftw3
+INCLUDES+= -I${FFTW_INC}
+INCLUDES+= -Iinclude/
+#------------------------------------------------------
+# archive program executable
+#------------------------------------------------------
+AR = ar
+ARFLAGS = -r
+RANLIB = ranlib
+
+#------------------------------------------------------
+# comnpiler executables
+#------------------------------------------------------
+#CC  = gcc
+#CXX = g++
+#CC  = gcc-4.8
+#CXX = g++-4.8
+CC  = ${HEDGEHOG_CC}
+CXX  = ${HEDGEHOG_CXX}
+#------------------------------------------------------
+# compiler flags for debug and release modes
+#------------------------------------------------------
+ifeq ($(MODE),debug)
+	CFLAGS 	 = -g  -Wall -W -Wno-sign-compare -Wno-unused-label -fopenmp -MMD ${INCLUDES}
+	CXXFLAGS = -g  -DFFTW3 -Wall -W -Wno-sign-compare  -Wno-unused-label -fopenmp -MMD ${INCLUDES}
+	LDFLAGS = ${LIBS} #-pg
+else
+	CFLAGS 	 =  -g -Wall -W -Wno-sign-compare  -Wno-unused-label  -fopenmp -MMD ${INCLUDES}
+	CXXFLAGS =  -g -Wall -DFFTW3 -W -Wno-sign-compare -Wno-unused-label  -fopenmp -MMD ${INCLUDES}
+	LDFLAGS = ${LIBS} #-pg
+endif
+
+#------------------------------------------------------
+# rules to build object files
+#------------------------------------------------------
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c -fmessage-length=0 $*.cpp
