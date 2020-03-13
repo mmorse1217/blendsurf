@@ -3,7 +3,7 @@
 %------------------------------------------------------------------------------------
 %BASIC CONTROLS(CATMULL-CLARK)
 
--ccsurf_submatlibfile		ccsubmatall.dat %ccsubmat_int_boun_v8.dat
+-ccsurf_submatlibfile		vis/ccsubmatall.dat %ccsubmat_int_boun_v8.dat
 -ccsurf_renderlvl		5
 -ccsurf_flats			-1		%flatness parameter, -1 is the default val
 						%given in paper (Biermann, Zorin)
@@ -12,7 +12,7 @@
 
 -bdsurf_submatlibfile	ccsubmatall.dat % ccsubmat_intboun13_corner8.dat % ccsubmat_int_v13.dat %	
 -bdsurf_bdulibfile		bdsurf_U_ONE.dat
--bdsurf_meshfile /Users/mmorse/Code/mercurial/mobo-temp/src/ebi/harper/wrl_files/squished_cube.wrl	
+-bdsurf_meshfile /Users/mmorse/Code/mercurial/mobo-temp/wrl_files/pipe.wrl	
 -bdsurf_renderlvl	    1
 -bdsurf_rendergen		0		% 0 = render full mesh, 
 						% 1 = render 1/2 charts,

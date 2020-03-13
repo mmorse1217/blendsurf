@@ -1,27 +1,31 @@
-# This is just template code to pass the source code variables to the parent
-# scope, in case the renderer needs to work in the future.
+# list of required source files
 set(Blendsurf_Visualizer_SRC 
-    vis/viewer3d.cpp  
-    vis/bdsurfobj.cpp 
-    vis/reflmap.cpp 
-    vis/ccsurfobj.cpp  
-    vis/ballviewer.cpp 
-    vis/viewer.cpp 
-    vis/psOpenGL.cpp  
-    vis/camera.cpp  
-    vis/arcball.cpp 
-    vis/texture.cpp 
+    viewer3d.cpp  
+    bdsurfobj.cpp 
+    reflmap.cpp 
+    ccsurfobj.cpp  
+    ballviewer.cpp 
+    viewer.cpp 
+    psOpenGL.cpp  
+    camera.cpp  
+    arcball.cpp 
+    texture.cpp 
     )
-PREPEND(Blendsurf_SRC)
-set(Blendsurf_Visualizer_SRC ${Blendsurf_Visualizer_SRC}  PARENT_SCOPE)
 
-#find_library(GLUT_LIB glut REQUIRED)
-#find_package(png REQUIRED)
-#include_directories($ENV{OPENGL_DIR})
-#include_directories(${LAPACK_LIBRARIES})
-#find_library(OPENGL_LIB OpenGL REQUIRED)
-#add_executable(bdrender bdrender.cpp)
-#add_executable(vistt0_sampleout vistt0_sampleout.cpp)
-#target_link_libraries(vistt0_sampleout blend ${LAPACK_LIBRARIES} png ${GLUT_LIB}
-#    ${OPENGL_LIB} )
-#${OPENGL_LIBRARIES} ${GLUT_LIBRARY} )
+# find packages  for rendering
+find_package(OpenGL REQUIRED)
+find_package(GLUT REQUIRED)
+find_package(png REQUIRED)
+
+# set up an intermediate library to link
+add_library(blendsurf_render STATIC ${Blendsurf_Visualizer_SRC})
+target_link_libraries(blendsurf_render OpenGL::GL)
+target_link_libraries(blendsurf_render GLUT::GLUT)
+target_link_libraries(blendsurf_render blendsurf)
+
+# build the executable and link
+add_executable(blendsurf_renderer  vistt0_sampleout.cpp)
+target_link_libraries(blendsurf_renderer blendsurf_render)
+
+#note: several files in visoption3d need to be present in order for renderer to
+#succeed. See the README.md

@@ -3,21 +3,24 @@ Requires:
     * OpenMP
     * BLAS/LAPACK
     * CMake 3.1
-Compilation tested on OSX 10.10 and Cent OS 7.3 with gcc-4.8 and icc/icpc 17.0.1.
+The renderer requires OpenGL 2 or less.
+Library compilation tested on OSX 10.10 and Cent OS 7.3 with gcc-4.8 and icc/icpc 17.0.1. The renderer has been tested with gcc-4.8 on OSX 10.10.
 
 To compile the library:
 
     mkdir build
     cd build
-    cmake ..
+    CC=<your-c-compiler> CXX=<your-cxx-compiler> cmake ..
     make 
 
+To compile the renderer, use
 
-Legacy rendering code is available in vis/. This is not maintained and does not compile with the current CMakeLists.txt files. The original makefile and makefile.in are included but not maintained.
+    CC=<your-c-compiler> CXX=<your-cxx-compiler> cmake -DCOMPILE_RENDERER=True ..
 
+Legacy rendering code is available in vis/. This is not maintained. It compiles and runs as expected with the current CMakeLists.txt's, but it requires `EXT_texture_cube_map` in your linked OpenGL implementation. This is deprecated and current versions of OpenGL do not support it. Moreover, the options file `vis/visoptions3d` requires `-bdsurf_submatlibfile` and `-bdsurf_bdulibfile` to point to the location of `ccsubmatall.dat` and `bdsurf_U_ONE.dat` respectively, which are downloaded from the link below.
 
 On the off chance someone gets the viewer running again:
-The options file for the visualization code is visoption3d, with some comments explaining each value.  In the legacy viewer, the following keys are active:
+The options file for the visualization code is `visoption3d`, with some comments explaining each value.  In the legacy viewer, the following keys are active:
 
    P    = display/remove control mesh
    R    = render surface
