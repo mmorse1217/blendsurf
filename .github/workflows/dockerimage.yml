@@ -1,0 +1,17 @@
+name: build
+
+on: [push]
+  
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: docker://mmorse1217/blendsurf:latest
+    - name: Pull/build Docker image
+      run: docker build --file docker/Dockerfile --target=blendsurf-build --cache-from="mmorse1217/blendsurf:latest" --tag blendsurf-build .
+    - name: Build blendsurf 
+      run: docker run --rm blendsurf-build
