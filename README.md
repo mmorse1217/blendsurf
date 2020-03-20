@@ -1,4 +1,4 @@
-![Docker Image CI](https://github.com/mmorse1217/blendsurf/workflows/Docker%20Image%20CI/badge.svg)
+![build](https://github.com/mmorse1217/blendsurf/workflows/build/badge.svg) ![docker image](https://github.com/mmorse1217/blendsurf/workflows/push%20docker%20image/badge.svg)
 
 Blendsurf is a C++ library to represent surfaces of arbitrary smoothness (C^\infty and C^k) written by Lexing Ying and Elif Tosun. Minor additions added by Matt Morse. Currently NOT  maintained. It is made available for use as is in other projects.
 
