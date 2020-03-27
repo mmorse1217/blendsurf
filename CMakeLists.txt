@@ -30,14 +30,13 @@ set(Blendsurf_INCLUDE_DEST "include/blendsurf-${Blendsurf_VERSION}")
 set(Blendsurf_LIB_DEST "lib/blendsurf-${Blendsurf_VERSION}")
 
 
-#target_include_directories(blendsurf PUBLIC ${Blendsurf_SOURCE_DIR}/include )
-
+# generator expressions are needed for the include directories, since installing headers changes the include path
 target_include_directories(blendsurf PUBLIC
-   $<BUILD_INTERFACE:${Blendsurf_SOURCE_DIR}/include> # for headers when building
-   $<BUILD_INTERFACE:${Blendsurf_BINARY_DIR}/include> # for headers when building
-   #$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}> # for config_impl.hpp when building
-   $<INSTALL_INTERFACE:include> # for client in install mode
-   #$<INSTALL_INTERFACE:${Blendsurf_LIB_DEST}> # for config_impl.hpp in install mode)
+   # including headers when building from source
+   $<BUILD_INTERFACE:${Blendsurf_SOURCE_DIR}/include> 
+   $<BUILD_INTERFACE:${Blendsurf_BINARY_DIR}/include> 
+   # including headers when installing 
+   $<INSTALL_INTERFACE:include> 
    )
 target_link_libraries(blendsurf ${LAPACK_LIBRARIES})
 target_link_libraries(blendsurf stdc++)
