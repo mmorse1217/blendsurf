@@ -45,6 +45,7 @@ target_link_libraries(blendsurf stdc++)
 # compile the renderer
 if (COMPILE_RENDERER)
     add_subdirectory(vis)
+    # TODO add install support for renderer...?
 endif()
 
 # Install blendsurf in CMAKE_INSTALL_PREFIX (defaults to /usr/local on linux)
